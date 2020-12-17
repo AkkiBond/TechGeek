@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto">
+              {% if posts %}
+              {% for post in posts %}
+              <div class="post-preview">
+                <a href="{{ url_for('post', post_id=post.id) }}">
+                  <h2 class="post-title">
+                    {{ post.title }}
+                  </h2>
+                  <h3 class="post-subtitle">
+                    {{ post.intro }}
+                  </h3>
+                </a>
+                <p class="post-meta">Posted by
+                  <a href="#">{{ post.author.name }}</a>
+                  {{ post.date.strftime('%Y-%m-%d') }}</p>
+              </div>
+              <hr>
+              {% endfor %}
+              {% else %}
+              <article class="media content-section">
+                <div class="media-body">
+                    <p class="article-content">No Posts</p>
+              </article>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+{% endblock content %}

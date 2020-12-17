@@ -1,0 +1,10 @@
+{% extends "layout1.html" %}
+{% block content %}
+<link href="{{ url_for('static', filename='css/error.css') }}" rel="stylesheet">
+<div class="mainbox">
+  <div class="err">500</div>
+  <i class="far fa-question-circle fa-spin"></i>
+  <i class="far fa-question-circle fa-spin"></i>
+  <div class="msg">Sorry We're having some troubles. <p>Let's go <a href="{{url_for('home')}}">home</a> and try from there.</p></div>
+    </div>
+{% endblock %}

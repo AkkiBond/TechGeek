@@ -1,0 +1,50 @@
+{% extends "layout1.html" %}
+{% block content %}
+<div class="row justify-content-center byn">
+    <div class="col-md-6">
+        <span class="anchor" id="formReg"></span>
+        <!-- form card reg -->
+        <div class="card card-outline-secondary">
+            <div class="card-header">
+                <h3 class="mb-0">{{title}}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Fill In</legend>
+                        <div class="form-group">
+                            {{ form.title.label(class="form-control-label") }}
+                            {% if form.title.errors %} {{ form.title(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback"> {% for error in form.title.errors %} <span>{{ error }}</span>
+                                {% endfor %} </div> {% else %} {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.intro.label(class="form-control-label") }}
+                            {% if form.intro.errors %} {{ form.intro(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback"> {% for error in form.intro.errors %} <span>{{ error }}</span>
+                                {% endfor %} </div> {% else %} {{ form.intro(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.content.label(class="form-control-label") }}
+                            {% if form.content.errors %} {{ form.content(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback"> {% for error in form.content.errors %} <span>{{ error }}</span>
+                                {% endfor %} </div> {% else %} {{ form.content(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                    </fieldset>
+                    <div class="form-group">
+                        {{form.submit(class="btn btn-success btn-lg float-right")}}
+                    </div>
+
+                </form>
+                
+            </div>
+            <!--/card-block-->
+        </div><!-- /form card login -->
+    </div>
+</div>
+{% endblock content %}

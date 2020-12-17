@@ -1,0 +1,106 @@
+{% extends "layout1.html" %}
+{% block content %}
+<header class="masthead" style="background-image: url('img/post-bg.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-heading">
+          <h1>{{ post.title }}</h1>
+          <h2 class="subheading">{{ post.intro }}</h2>
+          <span class="meta">Posted by
+            <a href="#">{{ post.author.username }}</a>
+            {{ post.date.strftime('%Y-%m-%d') }}</span>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      {% if post.author == current_user %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal"
+          data-target="#deleteModal">Delete</button>
+      </div>
+      {% endif %}
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>{{ post.content }}</p>
+        </div>
+    </div>
+  </div>
+</article>
+
+<div class="card card-outline-secondary" style = "margin-right: 150px;margin-left: 45px;padding-bottom: 50px;">
+  
+  <div class="card-body">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Comments</legend>
+        {% if current_user.is_authenticated %}
+        <div class="form-group">
+          {{ form.comment.label(class="form-control-label") }}
+          {% if form.comment.errors %} {{ form.comment(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback"> {% for error in form.comment.errors %} <span>{{ error }}</span>
+            {% endfor %} </div> {% else %} {{ form.comment(class="form-control") }}{%endif%}
+          
+        </div>
+      </fieldset>
+      <div class="form-group">
+        {{form.submit(class="btn btn-success btn-lg float-right")}}
+      </div>
+      {% else %}
+      <p> You need to login to comment! </p>
+    </form>
+    {% endif %}
+
+  </div>
+  <div class="card card-outline-secondary" style="margin-right: 250px;margin-left: 35px;">
+    {% if masti%}
+    {% for mast in masti %}
+    <div class="card-body">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="#">{{ mast.name }}</a>
+          <small class="text-muted">{{ mast.date.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <p class="article-content">{{ mast.content }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    {%else%}
+    <div class="card-body">
+      <div class="media-body">
+        <p class="article-content">No comments</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div><!-- /form card login -->
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
